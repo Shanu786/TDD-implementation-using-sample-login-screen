@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.White)
+                            .background(Color.LightGray)
                             .padding(innerPadding),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.Start

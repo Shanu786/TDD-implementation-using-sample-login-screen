@@ -4,28 +4,43 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.dashboardscren.DashboardScreen
-import com.example.feature_login.LoginScreen
+import com.example.dashboardscren.ui.DashboardScreen
+import com.example.feature_details.ui.DetailsScreen
+import com.example.feature_login.ui.LoginScreen
 
 @Composable
 fun AppHostNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "LoginScreen"
+        startDestination = LoginRoute
     ) {
-        composable(route = "LoginScreen") {
+        composable<LoginRoute> {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate("DashboardScreen") {
-                        popUpTo("LoginScreen") { inclusive = true }
+                    navController.navigate(DashboardRoute) {
+                        popUpTo<LoginRoute> { inclusive = true }
                         launchSingleTop = true
                     }
                 },
             )
         }
 
-        composable(route = "DashboardScreen") {
-            DashboardScreen()
+        composable<DashboardRoute> {
+            DashboardScreen(
+                onLogoutClick = {
+                    navController.navigate(LoginRoute) {
+                        popUpTo<DashboardRoute> { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onItemClick = { item ->
+                    navController.navigate(DetailsRoute(itemId = item.id))
+                }
+            )
+        }
+
+        composable<DetailsRoute> {
+            DetailsScreen(onBackClick = { navController.popBackStack() })
         }
     }
 }

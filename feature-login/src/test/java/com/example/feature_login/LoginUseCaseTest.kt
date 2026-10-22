@@ -1,7 +1,7 @@
 package com.example.feature_login
 
-import com.example.feature_login.event.LoginValidationResult
-import com.example.feature_login.usecase.LoginUseCase
+import com.example.feature_login.domain.model.LoginValidationResult
+import com.example.feature_login.domain.usecase.LoginUseCase
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

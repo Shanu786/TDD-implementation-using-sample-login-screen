@@ -1,6 +1,6 @@
 package com.example.feature_login.utils
 
-private val USERNAME_REGEX = Regex("^[A-Za-z0-9_.]+$")
+private val USERNAME_REGEX = Regex("^[A-Za-z0-9]+$")
 
 const val MIN_PASSWORD_LENGTH = 6
 

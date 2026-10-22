@@ -7,6 +7,7 @@ import androidx.compose.ui.test.performTextInput
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
 import org.junit.Rule
@@ -17,7 +18,7 @@ import org.junit.runner.RunWith
 class LoginNavigationTest {
 
     @get:Rule
-    val composeRule = createAndroidComposeRule<ComponentActivity>()
+    val composeRule = createAndroidComposeRule<ComponentActivity>() // Start Activity
 
     @Before
     fun launchAppActivityFromTestHost() {
@@ -93,7 +94,46 @@ class LoginNavigationTest {
         enterPassword(VALID_PASSWORD)
         submitLogin()
 
-        composeRule.onNodeWithText("This is Dashboard Screen.").assertIsDisplayed()
+        composeRule.onNodeWithText("Dashboard").assertIsDisplayed()
+
+        val firstItemTitle = "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            composeRule
+                .onAllNodesWithText(firstItemTitle, substring = true)
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+
+        composeRule
+            .onNodeWithText(firstItemTitle, substring = true)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun selectingDashboardItem_opensDetailsForSelectedItem() {
+        enterUsername(VALID_USERNAME)
+        enterPassword(VALID_PASSWORD)
+        submitLogin()
+
+        val selectedItemTitle = "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+        val selectedItemBody = "quia et suscipit"
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            composeRule
+                .onAllNodesWithText(selectedItemTitle, substring = true)
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+
+        composeRule.onNodeWithText(selectedItemTitle, substring = true).performClick()
+
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            composeRule
+                .onAllNodesWithText(selectedItemBody, substring = true)
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+        composeRule.onNodeWithText("Details").assertIsDisplayed()
+        composeRule.onNodeWithText(selectedItemBody, substring = true).assertIsDisplayed()
     }
 
     private fun enterUsername(username: String) {
@@ -113,7 +153,7 @@ class LoginNavigationTest {
     }
 
     private companion object {
-        const val VALID_USERNAME = "user.name1_"
+        const val VALID_USERNAME = "user.name1"
         const val VALID_PASSWORD = "Abc123@"
     }
 }
