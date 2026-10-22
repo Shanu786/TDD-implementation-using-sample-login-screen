@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -72,9 +73,18 @@ fun DashboardScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text("Dashboard", style = MaterialTheme.typography.titleLarge)
-            TextButton(onClick = onLogoutClick) {
-                Text("Log out")
+            Text(
+                text = "Dashboard",
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.Black
+            )
+
+            Button(onClick = onLogoutClick) {
+                Text(
+                    text = "Log out",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
             }
         }
 
@@ -135,7 +145,8 @@ private fun DashboardItemList(
 @Composable
 private fun DashboardItemRow(item: DashboardItem, onItemClick: (DashboardItem) -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .clickable {
                 onItemClick(item)
             },

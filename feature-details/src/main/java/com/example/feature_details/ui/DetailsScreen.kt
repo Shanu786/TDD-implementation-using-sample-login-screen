@@ -15,7 +15,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,8 +32,9 @@ import com.example.feature_details.ui.viewmodel.DetailsViewModel
 
 @Composable
 fun DetailsScreen(
+    onLogoutClick: () -> Unit,
     onBackClick: () -> Unit,
-    detailsViewModel: DetailsViewModel = hiltViewModel(),
+    detailsViewModel: DetailsViewModel = hiltViewModel()
 ) {
     val uiState by detailsViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -46,9 +46,19 @@ fun DetailsScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text("Details", style = MaterialTheme.typography.titleLarge)
-            TextButton(onClick = onBackClick) {
-                Text("Back")
+            Button(onClick = onBackClick) {
+                Text(
+                    text = "Back",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+            Button(onClick = onLogoutClick) {
+                Text(
+                    text = "Log out",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
             }
         }
 

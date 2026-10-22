@@ -40,7 +40,15 @@ fun AppHostNavigation(navController: NavHostController) {
         }
 
         composable<DetailsRoute> {
-            DetailsScreen(onBackClick = { navController.popBackStack() })
+            DetailsScreen(
+                onLogoutClick = {
+                    navController.navigate(LoginRoute) {
+                        popUpTo<DashboardRoute> { inclusive = true }
+                        launchSingleTop = true
+                    }
+                },
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }
