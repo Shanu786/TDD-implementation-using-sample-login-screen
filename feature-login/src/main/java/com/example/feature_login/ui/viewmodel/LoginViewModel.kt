@@ -62,7 +62,7 @@ class LoginViewModel @Inject constructor(
 
             LoginValidationResult.UsernameInvalid -> {
                 _uiState.value = currentState.copy(
-                    usernameError = "Use only letters, numbers, dots, or underscores.",
+                    usernameError = "Use only letters and numbers.",
                 )
             }
 

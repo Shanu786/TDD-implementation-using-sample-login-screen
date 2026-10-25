@@ -25,7 +25,6 @@ class DashboardViewModelTest {
             DashboardViewModel(GetDashboardItemsUseCase(FakeRepository(Result.success(expectedItems))))
 
         advanceUntilIdle()
-
         assertFalse(viewModel.uiState.value.isLoading)
         assertEquals(expectedItems, viewModel.uiState.value.items)
         assertEquals(null, viewModel.uiState.value.errorMessage)
@@ -38,7 +37,6 @@ class DashboardViewModelTest {
         )
 
         advanceUntilIdle()
-
         assertFalse(viewModel.uiState.value.isLoading)
         assertNotNull(viewModel.uiState.value.errorMessage)
         assertEquals(emptyList<DashboardItem>(), viewModel.uiState.value.items)
