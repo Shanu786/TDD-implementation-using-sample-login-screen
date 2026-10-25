@@ -1,0 +1,10 @@
+appId: com.example.login_screen_tdd
+name: Feature Details - verify details and log out
+---
+- scrollUntilVisible:
+    element: "(?s).*quia et suscipit.*"
+    direction: DOWN
+- assertVisible: "(?s).*quia et suscipit.*"
+- tapOn: "Log out"
+- assertVisible: "SUBMIT"
+- assertVisible: "Enter User Name"

@@ -1,0 +1,10 @@
+appId: com.example.login_screen_tdd
+name: Full journey - login, dashboard, details, back, and logout
+---
+- launchApp:
+    clearState: true
+
+- runFlow: ../features/feature-login/invalid-username-then-retry.yaml
+- runFlow: ../features/feature-dashboard/open-first-item.yaml
+- runFlow: ../features/feature-details/verify-and-back.yaml
+- runFlow: ../features/feature-dashboard/logout-to-login.yaml

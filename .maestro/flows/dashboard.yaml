@@ -1,0 +1,17 @@
+appId: com.example.login_screen_tdd
+name: Dashboard lists items and logout returns to login
+---
+- launchApp:
+    clearState: true
+
+- tapOn: "Enter User Name"
+- inputText: "user1"
+- tapOn: "Password"
+- inputText: "Abc123@"
+- hideKeyboard
+- tapOn: "SUBMIT"
+
+- assertVisible: "Dashboard"
+- assertVisible: ".*sunt aut facere.*"
+- tapOn: "Log out"
+- assertVisible: "SUBMIT"

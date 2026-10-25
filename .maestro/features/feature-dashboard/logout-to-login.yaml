@@ -1,0 +1,7 @@
+appId: com.example.login_screen_tdd
+name: Feature Dashboard - log out and return to login
+---
+- assertVisible: "Dashboard"
+- tapOn: "Log out"
+- assertVisible: "SUBMIT"
+- assertVisible: "Enter User Name"
