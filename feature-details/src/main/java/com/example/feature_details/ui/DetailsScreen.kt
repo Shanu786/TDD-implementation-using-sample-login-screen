@@ -38,6 +38,21 @@ fun DetailsScreen(
 ) {
     val uiState by detailsViewModel.uiState.collectAsStateWithLifecycle()
 
+    DetailsScreen(
+        uiState = uiState,
+        onLogoutClick = onLogoutClick,
+        onBackClick = onBackClick,
+        onRetryClick = detailsViewModel::loadItem,
+    )
+}
+
+@Composable
+fun DetailsScreen(
+    uiState: DetailsUiState,
+    onLogoutClick: () -> Unit,
+    onBackClick: () -> Unit,
+    onRetryClick: () -> Unit,
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
             modifier = Modifier
@@ -62,7 +77,7 @@ fun DetailsScreen(
             }
         }
 
-        when (val state = uiState) {
+        when (uiState) {
             DetailsUiState.Loading -> Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
@@ -81,14 +96,14 @@ fun DetailsScreen(
             ) {
                 Text("Couldn't load this item. Please try again.")
                 Button(
-                    onClick = detailsViewModel::loadItem,
+                    onClick = onRetryClick,
                     modifier = Modifier.padding(top = 12.dp),
                 ) {
                     Text("Retry")
                 }
             }
 
-            is DetailsUiState.Success -> DetailsContent(state.item)
+            is DetailsUiState.Success -> DetailsContent(uiState.item)
         }
     }
 }

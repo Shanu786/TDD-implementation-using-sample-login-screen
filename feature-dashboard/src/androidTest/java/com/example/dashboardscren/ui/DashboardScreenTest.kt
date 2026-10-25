@@ -79,6 +79,39 @@ class DashboardScreenTest {
     }
 
     @Test
+    fun errorState_displaysErrorMessage() {
+        composeRule.setContent {
+            DashboardScreen(
+                uiState = DashboardUiState(
+                    isLoading = false,
+                    errorMessage = "Couldn't load dashboard items. Please try again.",
+                ),
+                onLogoutClick = {},
+                onRetryClick = {},
+                onItemClick = {},
+            )
+        }
+
+        composeRule.onNodeWithText("Couldn't load dashboard items. Please try again.").assertIsDisplayed()
+    }
+
+    @Test
+    fun logoutButton_invokesCallback() {
+        var logoutClicked = false
+        composeRule.setContent {
+            DashboardScreen(
+                uiState = DashboardUiState(isLoading = false),
+                onLogoutClick = { logoutClicked = true },
+                onRetryClick = {},
+                onItemClick = {},
+            )
+        }
+
+        composeRule.onNodeWithText("Log out").performClick()
+        composeRule.runOnIdle { assertTrue(logoutClicked) }
+    }
+
+    @Test
     fun clickingDashboardItem_passesSelectedItem() {
         var selectedItem: DashboardItem? = null
         composeRule.setContent {

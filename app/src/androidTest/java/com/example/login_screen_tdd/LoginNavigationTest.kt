@@ -55,13 +55,13 @@ class LoginNavigationTest {
     }
 
     @Test
-    fun usernameHasUnsupportedCharacter_showsUsernameFormatError() {
-        enterUsername("user-name")
+    fun usernameHasDot_showsUsernameFormatError() {
+        enterUsername("user.name")
         enterPassword(VALID_PASSWORD)
         submitLogin()
 
         composeRule.onNodeWithText(
-            "Use only letters, numbers, dots, or underscores.",
+            "Use only letters and numbers.",
         ).assertIsDisplayed()
         assertStillOnLoginScreen()
     }
@@ -103,7 +103,6 @@ class LoginNavigationTest {
                 .fetchSemanticsNodes()
                 .isNotEmpty()
         }
-
         composeRule
             .onNodeWithText(firstItemTitle, substring = true)
             .assertIsDisplayed()
@@ -117,23 +116,37 @@ class LoginNavigationTest {
 
         val selectedItemTitle = "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
         val selectedItemBody = "quia et suscipit"
+
         composeRule.waitUntil(timeoutMillis = 5_000) {
             composeRule
                 .onAllNodesWithText(selectedItemTitle, substring = true)
                 .fetchSemanticsNodes()
                 .isNotEmpty()
         }
-
         composeRule.onNodeWithText(selectedItemTitle, substring = true).performClick()
-
         composeRule.waitUntil(timeoutMillis = 5_000) {
             composeRule
                 .onAllNodesWithText(selectedItemBody, substring = true)
                 .fetchSemanticsNodes()
                 .isNotEmpty()
         }
-        composeRule.onNodeWithText("Details").assertIsDisplayed()
+        composeRule.onNodeWithText("Back").assertIsDisplayed()
         composeRule.onNodeWithText(selectedItemBody, substring = true).assertIsDisplayed()
+
+        composeRule.onNodeWithText("Back").performClick()
+        composeRule.onNodeWithText("Dashboard").assertIsDisplayed()
+        composeRule.onNodeWithText(selectedItemTitle, substring = true).assertIsDisplayed()
+
+        composeRule.onNodeWithText(selectedItemTitle, substring = true).performClick()
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            composeRule
+                .onAllNodesWithText(selectedItemBody, substring = true)
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+
+        composeRule.onNodeWithText("Log out").performClick()
+        composeRule.onNodeWithText("SUBMIT").assertIsDisplayed()
     }
 
     private fun enterUsername(username: String) {
@@ -153,7 +166,7 @@ class LoginNavigationTest {
     }
 
     private companion object {
-        const val VALID_USERNAME = "user.name1"
+        const val VALID_USERNAME = "user1"
         const val VALID_PASSWORD = "Abc123@"
     }
 }

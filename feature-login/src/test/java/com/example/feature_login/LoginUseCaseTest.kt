@@ -28,7 +28,7 @@ class LoginUseCaseTest {
     fun blankPassword_returnsPasswordRequired() {
         assertEquals(
             LoginValidationResult.PasswordRequired,
-            loginUseCase.validate("user.name_1", ""),
+            loginUseCase.validate("username1", ""),
         )
     }
 
@@ -37,6 +37,22 @@ class LoginUseCaseTest {
         assertEquals(
             LoginValidationResult.UsernameInvalid,
             loginUseCase.validate("user-name", "Abc123!"),
+        )
+    }
+
+    @Test
+    fun usernameWithDot_returnsUsernameInvalid() {
+        assertEquals(
+            LoginValidationResult.UsernameInvalid,
+            loginUseCase.validate("user.name", "Abc123!"),
+        )
+    }
+
+    @Test
+    fun usernameWithUnderscore_returnsUsernameInvalid() {
+        assertEquals(
+            LoginValidationResult.UsernameInvalid,
+            loginUseCase.validate("user_name", "Abc123!"),
         )
     }
 
@@ -76,7 +92,7 @@ class LoginUseCaseTest {
     fun validUsernameAndPassword_returnValid() {
         assertEquals(
             LoginValidationResult.ValidLogin,
-            loginUseCase.validate("user.name_1", "Abc123!"),
+            loginUseCase.validate("username1", "Abc123!"),
         )
     }
 }
