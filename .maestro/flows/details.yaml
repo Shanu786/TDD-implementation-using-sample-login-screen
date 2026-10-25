@@ -1,0 +1,25 @@
+appId: com.example.login_screen_tdd
+name: Details back and logout navigation
+---
+- launchApp:
+    clearState: true
+
+- tapOn: "Enter User Name"
+- inputText: "user1"
+- tapOn: "Password"
+- inputText: "Abc123@"
+- hideKeyboard
+- tapOn: "SUBMIT"
+
+- assertVisible: "Dashboard"
+- tapOn: ".*sunt aut facere.*"
+- assertVisible: "quia et suscipit"
+
+- tapOn: "Back"
+- assertVisible: "Dashboard"
+- assertVisible: ".*sunt aut facere.*"
+
+- tapOn: ".*sunt aut facere.*"
+- assertVisible: "quia et suscipit"
+- tapOn: "Log out"
+- assertVisible: "SUBMIT"

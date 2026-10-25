@@ -1,0 +1,10 @@
+appId: com.example.login_screen_tdd
+name: Feature Login - sign in successfully
+---
+- tapOn: "Enter User Name"
+- inputText: "user1"
+- tapOn: "Password"
+- inputText: "Abc123@"
+- hideKeyboard
+- tapOn: "SUBMIT"
+- assertVisible: "Dashboard"

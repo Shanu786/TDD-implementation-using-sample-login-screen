@@ -1,0 +1,6 @@
+appId: com.example.login_screen_tdd
+name: Feature Dashboard - open the first list item
+---
+- assertVisible: "Dashboard"
+- assertVisible: ".*sunt aut facere.*"
+- tapOn: ".*sunt aut facere.*"

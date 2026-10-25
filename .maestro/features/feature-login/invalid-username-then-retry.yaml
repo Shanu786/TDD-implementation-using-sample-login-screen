@@ -1,0 +1,17 @@
+appId: com.example.login_screen_tdd
+name: Feature Login - reject invalid username, correct it, and sign in
+---
+- tapOn: "Enter User Name"
+- inputText: "user.1"
+- tapOn: "Password"
+- inputText: "Abc123@"
+- hideKeyboard
+- tapOn: "SUBMIT"
+- assertVisible: "Use only letters and numbers."
+
+- tapOn: "user.1"
+- eraseText
+- inputText: "user1"
+- hideKeyboard
+- tapOn: "SUBMIT"
+- assertVisible: "Dashboard"
